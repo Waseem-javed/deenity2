@@ -3,11 +3,11 @@
   "compilerOptions": {
     "strict": true,
     "ignoreDeprecations": "5.0",
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
       "@types/*": ["./src/types/*"],
+      "@config/*": ["./src/config/*"],
+      "@components/*": ["./src/components/*"],
       "@constants/*": ["./src/constants/*"]
     }
   },
