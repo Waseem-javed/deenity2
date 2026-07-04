@@ -1,16 +1,16 @@
 import { UMMAH_INSTANCE } from "@/config";
 
-export class NamesSerivce {
+export class NamesService {
   /* ==========================
    * Islamic Names
    * ========================== */
 
-  static getBoyNames() {
+  static getAllNames() {
     return UMMAH_INSTANCE.get("/names");
   }
 
   static getSearchName(query: string, limit: number) {
-    return UMMAH_INSTANCE.get(`/names/search?q=${query}&limit=${limit}`);
+    return UMMAH_INSTANCE.get("/names/search", { params: { q: query, limit } });
   }
 
   static getRandomName() {

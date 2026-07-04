@@ -17,11 +17,11 @@ export class QuranService {
     return UMMAH_INSTANCE.get(`/quran/surah/${surahNumber}/ayah/${ayahNumber}`);
   }
 
-  static async GetJuzz(juzNumber: number) {
-    return UMMAH_INSTANCE.get(`/quran/juzz/${juzNumber}`);
+  static async GetJuz(juzNumber: number) {
+    return UMMAH_INSTANCE.get(`/quran/juz/${juzNumber}`);
   }
 
-  static async GeMushafPage(number: number) {
+  static async GetMushafPage(number: number) {
     return UMMAH_INSTANCE.get(`/quran/page/${number}`);
   }
 
@@ -30,12 +30,10 @@ export class QuranService {
   }
 
   static async ReciterAudio(surahNumber: number, reciterId?: number) {
-    return UMMAH_INSTANCE.get(
-      `/quran/audio/${surahNumber}?reciter=${reciterId}`,
-    );
+    return UMMAH_INSTANCE.get(`/quran/audio/${surahNumber}`, { params: { reciter: reciterId } });
   }
 
-  static async AyahAudio(surahNumer: number, ayahNumber: number) {
-    return UMMAH_INSTANCE.get(`/quran/audio/${surahNumer}/${ayahNumber}`);
+  static async AyahAudio(surahNumber: number, ayahNumber: number) {
+    return UMMAH_INSTANCE.get(`/quran/audio/${surahNumber}/${ayahNumber}`);
   }
 }

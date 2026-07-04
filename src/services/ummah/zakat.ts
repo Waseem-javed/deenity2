@@ -1,7 +1,7 @@
 import { UMMAH_INSTANCE } from "@/config";
 import { ZakatBody } from "../types/zakat";
 
-export class ZakatSerivce {
+export class ZakatService {
   static async zakatInfo() {
     return UMMAH_INSTANCE.get("/zakat/info");
   }
@@ -11,10 +11,10 @@ export class ZakatSerivce {
   }
 
   static async zakatCalculate(body: ZakatBody) {
-    return UMMAH_INSTANCE.post("/zakat/calculate", { body });
+    return UMMAH_INSTANCE.post("/zakat/calculate", body);
   }
 
   static async zakatAgriculture(body: { value: number; water_source: string }) {
-    return UMMAH_INSTANCE.post("/zakat/calculate", { body });
+    return UMMAH_INSTANCE.post("/zakat/agriculture", body);
   }
 }

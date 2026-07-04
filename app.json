@@ -38,7 +38,14 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Ummah uses your location to show accurate prayer times and the Qibla direction."
+        }
+      ],
+      "expo-audio"
     ],
     "experiments": {
       "typedRoutes": true

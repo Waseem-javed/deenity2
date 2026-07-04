@@ -8,7 +8,7 @@ export class DuaService {
   static async getDuas() {
     return UMMAH_INSTANCE.get("/duas");
   }
-  static async getDua(id: number | string) {
+  static async getCategories() {
     return UMMAH_INSTANCE.get("/duas/categories");
   }
   static async getRandomDua() {

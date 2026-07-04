@@ -6,6 +6,6 @@ export class QiblaService {
    * ========================== */
 
   static getQibla(params: { lat: number; lng: number }) {
-    return UMMAH_INSTANCE.get("/gibla", { params });
+    return UMMAH_INSTANCE.get("/qibla", { params });
   }
 }

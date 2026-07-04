@@ -1,5 +1,5 @@
 import { UMMAH_INSTANCE } from "@/config";
-import { MonthlyTimetableParams, PrayerParamsProps } from "../types/prayer";
+import { MonthlyTimetableParams, PrayerParamsProps, RamadanTimetableParams } from "../types/prayer";
 
 export class PrayerService {
   /* ==========================
@@ -10,13 +10,13 @@ export class PrayerService {
     return UMMAH_INSTANCE.get("/prayer-times", { params });
   }
 
-  static async calcuateMethods() {
+  static async calculationMethods() {
     return UMMAH_INSTANCE.get("/prayer-time/methods");
   }
-  static async monthlyTimetabe(params: MonthlyTimetableParams) {
-    return UMMAH_INSTANCE.get("/prayer-time/methods", { params });
+  static async monthlyTimetable(params: MonthlyTimetableParams) {
+    return UMMAH_INSTANCE.get("/prayer-times/monthly", { params });
   }
-  static async ramadanTimetable() {
-    return UMMAH_INSTANCE.get("/prayer-time/methods");
+  static async ramadanTimetable(params: RamadanTimetableParams) {
+    return UMMAH_INSTANCE.get("/prayer-times/ramadan", { params });
   }
 }

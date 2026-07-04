@@ -3,11 +3,12 @@ interface ICommon {
   lng: number;
   method?: string;
   madhab: "Hanafi" | "Shafi";
-  timezono: string;
+  timezone: string;
 }
 
 export interface PrayerParamsProps extends ICommon {
-  date: Date;
+  /** YYYY-MM-DD */
+  date: string;
 }
 
 export interface MonthlyTimetableParams extends ICommon {

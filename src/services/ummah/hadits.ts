@@ -14,20 +14,14 @@ export class HadithService {
   }
 
   static searchHadith(q: string, collection: string, limit: number) {
-    return UMMAH_INSTANCE.get(`/hadith/search?q=${q}&${collection}&${limit}`);
+    return UMMAH_INSTANCE.get("/hadith/search", { params: { q, collection, limit } });
   }
 
-  static browseHadith(params: {
-    collection: string;
-    page: number;
-    limit: number;
-  }) {
-    return UMMAH_INSTANCE.get("/haidth/", {
-      params: { params },
-    });
+  static browseHadith({ collection, page, limit }: { collection: string; page: number; limit: number }) {
+    return UMMAH_INSTANCE.get(`/hadith/${collection}`, { params: { page, limit } });
   }
 
   static specificHadith(params: { collection: string; number: number }) {
-    return UMMAH_INSTANCE.get("randmo", { params });
+    return UMMAH_INSTANCE.get(`/hadith/${params.collection}/${params.number}`);
   }
 }
