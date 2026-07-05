@@ -45,7 +45,15 @@
           "locationWhenInUsePermission": "Ummah uses your location to show accurate prayer times and the Qibla direction."
         }
       ],
-      "expo-audio"
+      "expo-audio",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/icon.png",
+          "color": "#1d4ed8",
+          "sounds": ["./assets/audio/adhan-notification.wav"]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

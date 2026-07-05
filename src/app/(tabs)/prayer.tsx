@@ -6,20 +6,11 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AsyncState } from "@/components/ui/AsyncState";
 import { ScreenContainer } from "@/components/ui/ScreenContainer";
 import { useCurrentLocation } from "@/hooks/useCurrentLocation";
+import { computePrayerTimes, formatPrayerTime, type DailyPrayerTimes } from "@/lib/adhanTimes";
+import { requestNotificationPermissions, scheduleAdhanNotifications } from "@/lib/notifications";
 import { getMadhab } from "@/lib/preferences";
-import { PrayerService } from "@/services/ummah/prayer";
 
-type PrayerTimes = Partial<Record<"imsak" | "fajr" | "sunrise" | "dhuhr" | "asr" | "maghrib" | "isha", string>>;
-
-function todayIsoDate() {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${now.getFullYear()}-${month}-${day}`;
-}
-
-const PRAYER_ORDER: { key: keyof PrayerTimes; label: string; icon: keyof typeof MaterialCommunityIcons.glyphMap }[] = [
-  { key: "imsak", label: "Imsak", icon: "weather-night-partly-cloudy" },
+const PRAYER_ORDER: { key: keyof DailyPrayerTimes; label: string; icon: keyof typeof MaterialCommunityIcons.glyphMap }[] = [
   { key: "fajr", label: "Fajr", icon: "weather-sunset-up" },
   { key: "sunrise", label: "Sunrise", icon: "weather-sunny" },
   { key: "dhuhr", label: "Dhuhr", icon: "weather-sunny" },
@@ -30,24 +21,21 @@ const PRAYER_ORDER: { key: keyof PrayerTimes; label: string; icon: keyof typeof 
 
 export default function PrayerScreen() {
   const { coords, loading: locating, error: locationError, retry: retryLocation } = useCurrentLocation();
-  const [times, setTimes] = useState<PrayerTimes | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [times, setTimes] = useState<DailyPrayerTimes | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     if (!coords) return;
-    setLoading(true);
     setError(null);
     try {
       const madhab = await getMadhab();
-      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const response = await PrayerService.getPrayerTimes({ lat: coords.lat, lng: coords.lng, madhab, timezone, date: todayIsoDate() });
-      const data = response.data?.data?.prayer_times ?? {};
-      setTimes(data);
+      const computed = computePrayerTimes(coords.lat, coords.lng, madhab);
+      setTimes(computed);
+
+      const granted = await requestNotificationPermissions();
+      if (granted) await scheduleAdhanNotifications(computed);
     } catch {
-      setError("Couldn't load prayer times.");
-    } finally {
-      setLoading(false);
+      setError("Couldn't compute prayer times.");
     }
   }, [coords]);
 
@@ -62,7 +50,7 @@ export default function PrayerScreen() {
         <Text className="mt-1 text-base text-slate-600">Based on your current location</Text>
       </View>
 
-      <AsyncState loading={locating || loading} error={locationError ?? error} onRetry={locationError ? retryLocation : load}>
+      <AsyncState loading={locating} error={locationError ?? error} onRetry={locationError ? retryLocation : load}>
         <View className="gap-2 px-6 pb-6">
           {PRAYER_ORDER.map(({ key, label, icon }) => (
             <View key={key} className="flex-row items-center justify-between rounded-2xl bg-white p-4">
@@ -70,7 +58,7 @@ export default function PrayerScreen() {
                 <MaterialCommunityIcons name={icon} size={20} color="#1d4ed8" />
                 <Text className="text-base font-medium text-slate-900">{label}</Text>
               </View>
-              <Text className="text-base text-slate-600">{times?.[key] ?? "—"}</Text>
+              <Text className="text-base text-slate-600">{times ? formatPrayerTime(times[key]) : "—"}</Text>
             </View>
           ))}
 
