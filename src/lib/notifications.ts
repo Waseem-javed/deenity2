@@ -4,7 +4,8 @@ import { Platform } from "react-native";
 import type { DailyPrayerTimes } from "@/lib/adhanTimes";
 
 const ADHAN_CHANNEL_ID = "adhan";
-const ADHAN_SOUND = "adhan-notification.wav";
+const ADHAN_SILENT_CHANNEL_ID = "adhan-silent";
+const ADHAN_SOUND = "adhan.wav";
 
 const PRAYER_LABELS: Record<keyof DailyPrayerTimes, string> = {
   fajr: "Fajr",
@@ -32,18 +33,23 @@ export async function requestNotificationPermissions(): Promise<boolean> {
   return requested.granted;
 }
 
-async function ensureAndroidChannel() {
+async function ensureAndroidChannels() {
   if (Platform.OS !== "android") return;
   await Notifications.setNotificationChannelAsync(ADHAN_CHANNEL_ID, {
     name: "Adhan",
     importance: Notifications.AndroidImportance.HIGH,
     sound: ADHAN_SOUND,
   });
+  await Notifications.setNotificationChannelAsync(ADHAN_SILENT_CHANNEL_ID, {
+    name: "Adhan (silent)",
+    importance: Notifications.AndroidImportance.HIGH,
+    sound: null,
+  });
 }
 
 /** Schedules today's remaining prayers as local notifications, replacing any previously scheduled ones. */
-export async function scheduleAdhanNotifications(times: DailyPrayerTimes): Promise<void> {
-  await ensureAndroidChannel();
+export async function scheduleAdhanNotifications(times: DailyPrayerTimes, silent: boolean): Promise<void> {
+  await ensureAndroidChannels();
   await Notifications.cancelAllScheduledNotificationsAsync();
 
   const now = new Date();
@@ -57,13 +63,13 @@ export async function scheduleAdhanNotifications(times: DailyPrayerTimes): Promi
       content: {
         title: `${PRAYER_LABELS[key]} Adhan`,
         body: "It's time to pray.",
-        sound: ADHAN_SOUND,
+        sound: silent ? false : ADHAN_SOUND,
         data: { prayer: key },
       },
       trigger: {
         type: Notifications.SchedulableTriggerInputTypes.DATE,
         date,
-        channelId: ADHAN_CHANNEL_ID,
+        channelId: silent ? ADHAN_SILENT_CHANNEL_ID : ADHAN_CHANNEL_ID,
       },
     });
   }

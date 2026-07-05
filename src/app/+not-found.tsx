@@ -6,9 +6,9 @@ export default function NotFoundScreen() {
   return (
     <>
       <Stack.Screen options={{ title: "Not found" }} />
-      <SafeAreaView className="flex-1 items-center justify-center bg-slate-50 px-6">
-        <Text className="text-xl font-semibold text-slate-900">This screen doesn’t exist.</Text>
-        <Link href="/" className="mt-4 text-base text-brand-600">
+      <SafeAreaView className="flex-1 items-center justify-center bg-slate-50 dark:bg-slate-950 px-6">
+        <Text className="text-xl font-semibold text-slate-900 dark:text-white">This screen doesn’t exist.</Text>
+        <Link href="/" className="mt-4 text-base text-brand-600 dark:text-brand-400">
           Go to home
         </Link>
       </SafeAreaView>

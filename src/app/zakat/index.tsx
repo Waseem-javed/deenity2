@@ -48,10 +48,9 @@ export default function ZakatScreen() {
   }
 
   return (
-    <ScreenContainer className="px-0 py-0" edges={["top", "left", "right", "bottom"]}>
-      <ScrollView contentContainerClassName="px-6 py-6 gap-3" keyboardShouldPersistTaps="handled">
-        <Text className="text-3xl font-semibold text-slate-900">Zakat Calculator</Text>
-        <Text className="mb-2 text-base text-slate-600">Fill in what applies to you</Text>
+    <ScreenContainer className="px-0 py-0" edges={["left", "right", "bottom"]}>
+      <ScrollView contentContainerClassName="px-6 pt-4 pb-6 gap-3" keyboardShouldPersistTaps="handled">
+        <Text className="mb-2 text-base text-slate-600 dark:text-slate-300">Fill in what applies to you</Text>
 
         {FIELDS.map(({ key, label }) => (
           <TextInput
@@ -61,7 +60,6 @@ export default function ZakatScreen() {
             keyboardType="numeric"
             value={values[key] ?? ""}
             onChangeText={(text) => setValues((prev) => ({ ...prev, [key]: text }))}
-            style={{ backgroundColor: "#fff" }}
           />
         ))}
 
@@ -69,13 +67,13 @@ export default function ZakatScreen() {
           Calculate Zakat
         </Button>
 
-        {error ? <Text className="text-center text-base text-slate-600">{error}</Text> : null}
+        {error ? <Text className="text-center text-base text-slate-600 dark:text-slate-300">{error}</Text> : null}
 
         {result !== null ? (
-          <View className="mt-2 items-center rounded-2xl bg-brand-50 p-6">
-            <Text className="text-sm font-medium text-brand-600">{result.aboveNisab ? "Zakat due" : "Below nisab"}</Text>
-            <Text className="mt-1 text-3xl font-semibold text-slate-900">{result.dueFormatted}</Text>
-            {result.note ? <Text className="mt-2 text-center text-sm text-slate-500">{result.note}</Text> : null}
+          <View className="mt-2 items-center rounded-2xl bg-brand-50 dark:bg-slate-800 p-6">
+            <Text className="text-sm font-medium text-brand-600 dark:text-brand-400">{result.aboveNisab ? "Zakat due" : "Below nisab"}</Text>
+            <Text className="mt-1 text-3xl font-semibold text-slate-900 dark:text-white">{result.dueFormatted}</Text>
+            {result.note ? <Text className="mt-2 text-center text-sm text-slate-500 dark:text-slate-400">{result.note}</Text> : null}
           </View>
         ) : null}
       </ScrollView>

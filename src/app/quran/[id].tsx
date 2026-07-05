@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
@@ -86,13 +86,14 @@ export default function SurahScreen() {
   }
 
   return (
-    <ScreenContainer className="px-0 py-0" edges={["top", "left", "right", "bottom"]}>
-      <View className="px-6 pb-2 pt-6">
+    <ScreenContainer className="px-0 py-0" edges={["left", "right", "bottom"]}>
+      <Stack.Screen options={{ title: surah?.name_english ?? `Surah ${surahNumber}` }} />
+      <View className="px-6 pb-2 pt-4">
         <View className="flex-row items-center justify-between">
           <View className="flex-1 pr-3">
-            <Text className="text-2xl font-semibold text-slate-900">{surah?.name_english ?? `Surah ${surahNumber}`}</Text>
+            <Text className="text-2xl font-semibold text-slate-900 dark:text-white">{surah?.name_english ?? `Surah ${surahNumber}`}</Text>
             {surah ? (
-              <Text className="mt-0.5 text-sm text-slate-500">
+              <Text className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
                 {surah.name_translation} · {surah.verses_count} verses
               </Text>
             ) : null}
@@ -100,7 +101,7 @@ export default function SurahScreen() {
           <Pressable
             onPress={togglePlayback}
             disabled={!audioUrl}
-            className="h-12 w-12 items-center justify-center rounded-full bg-brand-50 active:opacity-70"
+            className="h-12 w-12 items-center justify-center rounded-full bg-brand-50 dark:bg-slate-800 active:opacity-70"
           >
             {!surah ? (
               <ActivityIndicator size="small" color="#1d4ed8" />
@@ -118,9 +119,9 @@ export default function SurahScreen() {
                 <Pressable
                   key={reciter.reciter_id}
                   onPress={() => selectReciter(reciter.reciter_id)}
-                  className={["mx-1 rounded-full px-3 py-1.5", selected ? "bg-brand-600" : "bg-white"].join(" ")}
+                  className={["mx-1 rounded-full px-3 py-1.5", selected ? "bg-brand-600" : "bg-white dark:bg-slate-900"].join(" ")}
                 >
-                  <Text className={selected ? "text-sm font-medium text-white" : "text-sm font-medium text-slate-600"}>
+                  <Text className={selected ? "text-sm font-medium text-white" : "text-sm font-medium text-slate-600 dark:text-slate-300"}>
                     {reciter.reciter}
                   </Text>
                 </Pressable>
@@ -137,18 +138,18 @@ export default function SurahScreen() {
           contentContainerClassName="px-6 pb-6 gap-3"
           ListHeaderComponent={
             surah?.bismillah_pre ? (
-              <View className="mb-1 items-center rounded-2xl bg-white py-5">
-                <Text className="text-2xl leading-10 text-slate-900">{BISMILLAH}</Text>
+              <View className="mb-1 items-center rounded-2xl bg-white dark:bg-slate-900 py-5">
+                <Text className="text-2xl leading-10 text-slate-900 dark:text-white">{BISMILLAH}</Text>
               </View>
             ) : null
           }
           renderItem={({ item }) => (
-            <View className="rounded-2xl bg-white p-4">
-              <View className="h-6 w-6 items-center justify-center rounded-full bg-brand-50">
-                <Text className="text-xs font-semibold text-brand-600">{item.ayah}</Text>
+            <View className="rounded-2xl bg-white dark:bg-slate-900 p-4">
+              <View className="h-6 w-6 items-center justify-center rounded-full bg-brand-50 dark:bg-slate-800">
+                <Text className="text-xs font-semibold text-brand-600 dark:text-brand-400">{item.ayah}</Text>
               </View>
-              <Text className="mt-2 text-right text-xl leading-9 text-slate-900">{item.arabic}</Text>
-              {item.translation ? <Text className="mt-2 text-sm leading-6 text-slate-600">{item.translation}</Text> : null}
+              <Text className="mt-2 text-right text-xl leading-9 text-slate-900 dark:text-white">{item.arabic}</Text>
+              {item.translation ? <Text className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{item.translation}</Text> : null}
             </View>
           )}
         />

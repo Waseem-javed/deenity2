@@ -63,17 +63,17 @@ export default function OnboardingScreen() {
   function renderSlide({ item }: ListRenderItemInfo<Slide>) {
     return (
       <View style={{ width }} className="flex-1 px-8">
-        <View className="h-24 w-24 mx-auto items-center justify-center rounded-full bg-brand-50">
+        <View className="h-24 w-24 mx-auto items-center justify-center rounded-full bg-brand-50 dark:bg-slate-800">
           <MaterialCommunityIcons name={item.icon} size={44} color="#1d4ed8" />
         </View>
-        <Text className="mt-8 text-center text-2xl font-semibold text-slate-900">{item.title}</Text>
-        <Text className="mt-3 text-center text-base leading-6 text-slate-600">{item.description}</Text>
+        <Text className="mt-8 text-center text-2xl font-semibold text-slate-900 dark:text-white">{item.title}</Text>
+        <Text className="mt-3 text-center text-base leading-6 text-slate-600 dark:text-slate-300">{item.description}</Text>
       </View>
     );
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50">
+    <SafeAreaView className="flex-1 bg-slate-50 dark:bg-slate-950">
       <View className="flex-row justify-end px-6 pt-2">
         <Button onPress={finish} textColor="#64748b">
           Skip
@@ -94,7 +94,7 @@ export default function OnboardingScreen() {
 
       <View className="flex-row items-center justify-center gap-2 pb-6">
         {SLIDES.map((slide, i) => (
-          <View key={slide.key} className={i === index ? "h-2 w-6 rounded-full bg-brand-600" : "h-2 w-2 rounded-full bg-slate-300"} />
+          <View key={slide.key} className={i === index ? "h-2 w-6 rounded-full bg-brand-600" : "h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-700"} />
         ))}
       </View>
 

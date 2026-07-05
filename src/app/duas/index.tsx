@@ -32,26 +32,21 @@ export default function DuasScreen() {
   }, [load]);
 
   return (
-    <ScreenContainer className="px-0 py-0" edges={["top", "left", "right", "bottom"]}>
-      <View className="px-6 pb-2 pt-6">
-        <Text className="text-3xl font-semibold text-slate-900">Duas</Text>
-        <Text className="mt-1 text-base text-slate-600">Everyday supplications, by category</Text>
-      </View>
-
+    <ScreenContainer className="px-0 py-0" edges={["left", "right", "bottom"]}>
       <AsyncState loading={loading} error={error} onRetry={load}>
         <FlatList
           data={categories}
           keyExtractor={(item) => item.id}
-          contentContainerClassName="px-6 pb-6 gap-2"
+          contentContainerClassName="px-6 pt-4 pb-6 gap-2"
           renderItem={({ item }) => (
             <Link href={`/duas/${item.id}`} asChild>
-              <Pressable className="flex-row items-center justify-between rounded-2xl bg-white p-4 active:opacity-70">
+              <Pressable className="flex-row items-center justify-between rounded-2xl bg-white dark:bg-slate-900 p-4 active:opacity-70">
                 <View className="flex-1 pr-3">
-                  <Text className="text-base font-semibold text-slate-900">{item.name}</Text>
-                  <Text className="mt-0.5 text-sm text-slate-500">{item.description}</Text>
+                  <Text className="text-base font-semibold text-slate-900 dark:text-white">{item.name}</Text>
+                  <Text className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">{item.description}</Text>
                 </View>
-                <View className="h-8 min-w-8 items-center justify-center rounded-full bg-brand-50 px-2">
-                  <Text className="text-xs font-semibold text-brand-600">{item.count}</Text>
+                <View className="h-8 min-w-8 items-center justify-center rounded-full bg-brand-50 dark:bg-slate-800 px-2">
+                  <Text className="text-xs font-semibold text-brand-600 dark:text-brand-400">{item.count}</Text>
                 </View>
               </Pressable>
             </Link>

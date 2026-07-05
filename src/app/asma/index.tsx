@@ -37,27 +37,22 @@ export default function AsmaScreen() {
   }, [load]);
 
   return (
-    <ScreenContainer className="px-0 py-0" edges={["top", "left", "right", "bottom"]}>
-      <View className="px-6 pb-2 pt-6">
-        <Text className="text-3xl font-semibold text-slate-900">99 Names</Text>
-        <Text className="mt-1 text-base text-slate-600">Al-Asma-ul-Husna</Text>
-      </View>
-
+    <ScreenContainer className="px-0 py-0" edges={["left", "right", "bottom"]}>
       <AsyncState loading={loading} error={error} onRetry={load}>
         <FlatList
           data={names}
           keyExtractor={(item, index) => String(item.number ?? index)}
           numColumns={2}
           columnWrapperClassName="justify-between"
-          contentContainerClassName="px-6 pb-6 gap-3"
+          contentContainerClassName="px-6 pt-4 pb-6 gap-3"
           renderItem={({ item, index }) => (
-            <View className="mb-3 w-[48%] rounded-2xl bg-white p-4">
-              <Text className="text-xs font-medium text-brand-600">{item.number ?? index + 1}</Text>
-              <Text className="mt-2 text-right text-2xl text-slate-900">{item.arabic}</Text>
-              <Text className="mt-2 text-sm font-medium text-slate-900">{item.transliteration}</Text>
-              <Text className="text-xs text-slate-400">{item.english}</Text>
+            <View className="mb-3 w-[48%] rounded-2xl bg-white dark:bg-slate-900 p-4">
+              <Text className="text-xs font-medium text-brand-600 dark:text-brand-400">{item.number ?? index + 1}</Text>
+              <Text className="mt-2 text-right text-2xl text-slate-900 dark:text-white">{item.arabic}</Text>
+              <Text className="mt-2 text-sm font-medium text-slate-900 dark:text-white">{item.transliteration}</Text>
+              <Text className="text-xs text-slate-400 dark:text-slate-500">{item.english}</Text>
               {item.meaning ? (
-                <Text className="mt-1 text-sm text-slate-500" numberOfLines={2}>
+                <Text className="mt-1 text-sm text-slate-500 dark:text-slate-400" numberOfLines={2}>
                   {item.meaning}
                 </Text>
               ) : null}

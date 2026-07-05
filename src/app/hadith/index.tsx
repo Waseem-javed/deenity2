@@ -35,37 +35,32 @@ export default function HadithScreen() {
   }, [load]);
 
   return (
-    <ScreenContainer className="px-0 py-0" edges={["top", "left", "right", "bottom"]}>
-      <View className="px-6 pb-2 pt-6">
-        <Text className="text-3xl font-semibold text-slate-900">Hadith</Text>
-        <Text className="mt-1 text-base text-slate-600">Collections & daily hadith</Text>
-      </View>
-
+    <ScreenContainer className="px-0 py-0" edges={["left", "right", "bottom"]}>
       <AsyncState loading={loading} error={error} onRetry={load}>
         <FlatList
           data={collections}
           keyExtractor={(item) => item.key}
-          contentContainerClassName="px-6 pb-6 gap-3"
+          contentContainerClassName="px-6 pt-4 pb-6 gap-3"
           ListHeaderComponent={
             random ? (
-              <View className="mb-3 rounded-2xl bg-brand-50 p-4">
-                <Text className="text-xs font-medium text-brand-600">Hadith of the moment · {random.collection_name}</Text>
-                <Text className="mt-2 text-right text-lg leading-8 text-slate-900">{random.arabic}</Text>
-                <Text className="mt-2 text-sm leading-6 text-slate-700">{random.english}</Text>
-                {random.grade ? <Text className="mt-2 text-xs text-slate-500">Grade: {random.grade}</Text> : null}
+              <View className="mb-3 rounded-2xl bg-brand-50 dark:bg-slate-800 p-4">
+                <Text className="text-xs font-medium text-brand-600 dark:text-brand-400">Hadith of the moment · {random.collection_name}</Text>
+                <Text className="mt-2 text-right text-lg leading-8 text-slate-900 dark:text-white">{random.arabic}</Text>
+                <Text className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{random.english}</Text>
+                {random.grade ? <Text className="mt-2 text-xs text-slate-500 dark:text-slate-400">Grade: {random.grade}</Text> : null}
               </View>
             ) : null
           }
           renderItem={({ item }) => (
             <Link href={`/hadith/${item.key}`} asChild>
-              <Pressable className="flex-row items-center justify-between rounded-2xl bg-white p-4 active:opacity-70">
+              <Pressable className="flex-row items-center justify-between rounded-2xl bg-white dark:bg-slate-900 p-4 active:opacity-70">
                 <View className="flex-1 pr-3">
-                  <Text className="text-base font-semibold text-slate-900">{item.name}</Text>
-                  <Text className="mt-0.5 text-sm text-slate-500">
+                  <Text className="text-base font-semibold text-slate-900 dark:text-white">{item.name}</Text>
+                  <Text className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
                     {item.author} · {item.total_hadiths.toLocaleString()} hadiths
                   </Text>
                 </View>
-                <Text className="text-lg text-slate-700">{item.arabic_name}</Text>
+                <Text className="text-lg text-slate-700 dark:text-slate-300">{item.arabic_name}</Text>
               </Pressable>
             </Link>
           )}

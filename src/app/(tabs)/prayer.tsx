@@ -8,7 +8,7 @@ import { ScreenContainer } from "@/components/ui/ScreenContainer";
 import { useCurrentLocation } from "@/hooks/useCurrentLocation";
 import { computePrayerTimes, formatPrayerTime, type DailyPrayerTimes } from "@/lib/adhanTimes";
 import { requestNotificationPermissions, scheduleAdhanNotifications } from "@/lib/notifications";
-import { getMadhab } from "@/lib/preferences";
+import { getMadhab, getSilentAdhan } from "@/lib/preferences";
 
 const PRAYER_ORDER: { key: keyof DailyPrayerTimes; label: string; icon: keyof typeof MaterialCommunityIcons.glyphMap }[] = [
   { key: "fajr", label: "Fajr", icon: "weather-sunset-up" },
@@ -33,7 +33,10 @@ export default function PrayerScreen() {
       setTimes(computed);
 
       const granted = await requestNotificationPermissions();
-      if (granted) await scheduleAdhanNotifications(computed);
+      if (granted) {
+        const silent = await getSilentAdhan();
+        await scheduleAdhanNotifications(computed, silent);
+      }
     } catch {
       setError("Couldn't compute prayer times.");
     }
@@ -46,23 +49,23 @@ export default function PrayerScreen() {
   return (
     <ScreenContainer className="px-0 py-0">
       <View className="px-6 pb-2 pt-6">
-        <Text className="text-3xl font-semibold text-slate-900">Prayer Times</Text>
-        <Text className="mt-1 text-base text-slate-600">Based on your current location</Text>
+        <Text className="text-3xl font-semibold text-slate-900 dark:text-white">Prayer Times</Text>
+        <Text className="mt-1 text-base text-slate-600 dark:text-slate-300">Based on your current location</Text>
       </View>
 
       <AsyncState loading={locating} error={locationError ?? error} onRetry={locationError ? retryLocation : load}>
         <View className="gap-2 px-6 pb-6">
           {PRAYER_ORDER.map(({ key, label, icon }) => (
-            <View key={key} className="flex-row items-center justify-between rounded-2xl bg-white p-4">
+            <View key={key} className="flex-row items-center justify-between rounded-2xl bg-white dark:bg-slate-900 p-4">
               <View className="flex-row items-center gap-3">
                 <MaterialCommunityIcons name={icon} size={20} color="#1d4ed8" />
-                <Text className="text-base font-medium text-slate-900">{label}</Text>
+                <Text className="text-base font-medium text-slate-900 dark:text-white">{label}</Text>
               </View>
-              <Text className="text-base text-slate-600">{times ? formatPrayerTime(times[key]) : "—"}</Text>
+              <Text className="text-base text-slate-600 dark:text-slate-300">{times ? formatPrayerTime(times[key]) : "—"}</Text>
             </View>
           ))}
 
-          <Link href="/qibla" className="mt-2 text-center text-base font-medium text-brand-600">
+          <Link href="/(tabs)/qibla" className="mt-2 text-center text-base font-medium text-brand-600 dark:text-brand-400">
             Find the Qibla direction →
           </Link>
         </View>

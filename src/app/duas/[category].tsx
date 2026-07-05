@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { FlatList, Text, View } from "react-native";
 
@@ -44,23 +44,20 @@ export default function DuaCategoryScreen() {
   }, [load]);
 
   return (
-    <ScreenContainer className="px-0 py-0" edges={["top", "left", "right", "bottom"]}>
-      <View className="px-6 pb-2 pt-6">
-        <Text className="text-2xl font-semibold text-slate-900">{title}</Text>
-      </View>
-
+    <ScreenContainer className="px-0 py-0" edges={["left", "right", "bottom"]}>
+      <Stack.Screen options={{ title }} />
       <AsyncState loading={loading} error={error} onRetry={load}>
         <FlatList
           data={duas}
           keyExtractor={(item) => String(item.id)}
-          contentContainerClassName="px-6 pb-6 gap-3"
+          contentContainerClassName="px-6 pt-4 pb-6 gap-3"
           renderItem={({ item }) => (
-            <View className="rounded-2xl bg-white p-4">
-              <Text className="text-base font-semibold text-slate-900">{item.title}</Text>
-              <Text className="mt-2 text-right text-xl leading-9 text-slate-900">{item.arabic}</Text>
-              {item.transliteration ? <Text className="mt-2 text-sm italic leading-6 text-slate-500">{item.transliteration}</Text> : null}
-              {item.translation ? <Text className="mt-2 text-sm leading-6 text-slate-600">{item.translation}</Text> : null}
-              {item.source ? <Text className="mt-2 text-xs text-slate-400">{item.source}</Text> : null}
+            <View className="rounded-2xl bg-white dark:bg-slate-900 p-4">
+              <Text className="text-base font-semibold text-slate-900 dark:text-white">{item.title}</Text>
+              <Text className="mt-2 text-right text-xl leading-9 text-slate-900 dark:text-white">{item.arabic}</Text>
+              {item.transliteration ? <Text className="mt-2 text-sm italic leading-6 text-slate-500 dark:text-slate-400">{item.transliteration}</Text> : null}
+              {item.translation ? <Text className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{item.translation}</Text> : null}
+              {item.source ? <Text className="mt-2 text-xs text-slate-400 dark:text-slate-500">{item.source}</Text> : null}
             </View>
           )}
         />

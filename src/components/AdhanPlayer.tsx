@@ -2,15 +2,19 @@ import { useAudioPlayer } from "expo-audio";
 import * as Notifications from "expo-notifications";
 import { useEffect } from "react";
 
-const FULL_ADHAN = require("../../assets/audio/azan.mp3");
+import { getSilentAdhan } from "@/lib/preferences";
+
+const FULL_ADHAN = require("@assets/audio/adhan.wav");
 
 export function AdhanPlayer() {
   const player = useAudioPlayer(FULL_ADHAN);
 
   useEffect(() => {
-    function playFromStart() {
+    async function playFromStart() {
+      if (await getSilentAdhan()) return;
       player.pause();
-      player.seekTo(0).then(() => player.play());
+      await player.seekTo(0);
+      player.play();
     }
 
     function isAdhanNotification(data: unknown) {

@@ -1,18 +1,49 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { PaperProvider } from "react-native-paper";
+import { useColorScheme } from "nativewind";
+import { useEffect } from "react";
+import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { AdhanPlayer } from "@/components/AdhanPlayer";
+import { getThemePreference } from "@/lib/preferences";
 import "../../global.css";
 
+const lightTheme = { ...MD3LightTheme, colors: { ...MD3LightTheme.colors, primary: "#1d4ed8" } };
+const darkTheme = { ...MD3DarkTheme, colors: { ...MD3DarkTheme.colors, primary: "#60a5fa" } };
+
 export default function RootLayout() {
+  const { colorScheme, setColorScheme } = useColorScheme();
+  const isDark = colorScheme === "dark";
+
+  useEffect(() => {
+    getThemePreference().then((preference) => {
+      if (preference) setColorScheme(preference);
+    });
+  }, [setColorScheme]);
+
   return (
     <SafeAreaProvider>
-      <PaperProvider>
-        <StatusBar style="dark" />
+      <PaperProvider theme={isDark ? darkTheme : lightTheme}>
+        <StatusBar style={isDark ? "light" : "dark"} />
         <AdhanPlayer />
-        <Stack screenOptions={{ headerShown: false }} />
+        <Stack
+          screenOptions={{
+            headerShadowVisible: false,
+            headerStyle: { backgroundColor: isDark ? "#020617" : "#f8fafc" },
+            headerTintColor: isDark ? "#60a5fa" : "#1d4ed8",
+            headerTitleStyle: { fontWeight: "600", color: isDark ? "#ffffff" : "#0f172a" },
+          }}
+        >
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ title:'', headerShown: false }} />
+          <Stack.Screen name="duas/index" options={{ title: "Duas" }} />
+          <Stack.Screen name="asma/index" options={{ title: "99 Names" }} />
+          <Stack.Screen name="names/index" options={{ title: "Islamic Names" }} />
+          <Stack.Screen name="zakat/index" options={{ title: "Zakat Calculator" }} />
+          <Stack.Screen name="hadith/index" options={{ title: "Hadith" }} />
+        </Stack>
       </PaperProvider>
     </SafeAreaProvider>
   );

@@ -51,7 +51,7 @@
         {
           "icon": "./assets/images/icon.png",
           "color": "#1d4ed8",
-          "sounds": ["./assets/audio/adhan-notification.wav"]
+          "sounds": ["./assets/audio/adhan.wav"]
         }
       ]
     ],

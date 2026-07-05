@@ -44,8 +44,8 @@ export default function QuranScreen() {
   return (
     <ScreenContainer className="px-0 py-0">
       <View className="px-6 pb-2 pt-6">
-        <Text className="text-3xl font-semibold text-slate-900">Quran</Text>
-        <Text className="mt-1 text-base text-slate-600">114 surahs, with translation</Text>
+        <Text className="text-3xl font-semibold text-slate-900 dark:text-white">Quran</Text>
+        <Text className="mt-1 text-base text-slate-600 dark:text-slate-300">114 surahs, with translation</Text>
       </View>
 
       <AsyncState loading={loading} error={error} onRetry={load}>
@@ -56,17 +56,17 @@ export default function QuranScreen() {
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => load({ silent: true })} tintColor="#1d4ed8" />}
           renderItem={({ item }) => (
             <Link href={`/quran/${item.number}`} asChild>
-              <Pressable className="flex-row items-center gap-4 rounded-2xl bg-white p-4 active:opacity-70">
-                <View className="h-10 w-10 items-center justify-center rounded-full bg-brand-50">
-                  <Text className="font-semibold text-brand-600">{item.number}</Text>
+              <Pressable className="flex-row items-center gap-4 rounded-2xl bg-white dark:bg-slate-900 p-4 active:opacity-70">
+                <View className="h-10 w-10 items-center justify-center rounded-full bg-brand-50 dark:bg-slate-800">
+                  <Text className="font-semibold text-brand-600 dark:text-brand-400">{item.number}</Text>
                 </View>
                 <View className="flex-1">
-                  <Text className="text-base font-semibold text-slate-900">{item.name_english}</Text>
-                  <Text className="mt-0.5 text-sm text-slate-500">
+                  <Text className="text-base font-semibold text-slate-900 dark:text-white">{item.name_english}</Text>
+                  <Text className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
                     {item.name_translation} · {item.verses_count} verses
                   </Text>
                 </View>
-                <Text className="text-lg text-slate-700">{item.name_arabic}</Text>
+                <Text className="text-lg text-slate-700 dark:text-slate-300">{item.name_arabic}</Text>
               </Pressable>
             </Link>
           )}

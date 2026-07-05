@@ -40,17 +40,9 @@ export default function NamesScreen() {
   }, [query, load]);
 
   return (
-    <ScreenContainer className="px-0 py-0" edges={["top", "left", "right", "bottom"]}>
-      <View className="px-6 pb-2 pt-6">
-        <Text className="text-3xl font-semibold text-slate-900">Islamic Names</Text>
-        <Text className="mt-1 text-base text-slate-600">Meanings for newborns</Text>
-        <TextInput
-          mode="outlined"
-          placeholder="Search a name…"
-          value={query}
-          onChangeText={setQuery}
-          style={{ marginTop: 16, backgroundColor: "#fff" }}
-        />
+    <ScreenContainer className="px-0 py-0" edges={["left", "right", "bottom"]}>
+      <View className="px-6 pb-2 pt-4">
+        <TextInput mode="outlined" placeholder="Search a name…" value={query} onChangeText={setQuery} />
       </View>
 
       <AsyncState loading={loading} error={error} onRetry={() => load(query)}>
@@ -59,13 +51,13 @@ export default function NamesScreen() {
           keyExtractor={(item, index) => String(item.id ?? index)}
           contentContainerClassName="px-6 pb-6 gap-2"
           renderItem={({ item }) => (
-            <View className="rounded-2xl bg-white p-4">
+            <View className="rounded-2xl bg-white dark:bg-slate-900 p-4">
               <View className="flex-row items-center justify-between">
-                <Text className="text-base font-semibold text-slate-900">{item.name}</Text>
-                <Text className="text-lg text-slate-700">{item.arabic}</Text>
+                <Text className="text-base font-semibold text-slate-900 dark:text-white">{item.name}</Text>
+                <Text className="text-lg text-slate-700 dark:text-slate-300">{item.arabic}</Text>
               </View>
-              {item.meaning ? <Text className="mt-1 text-sm text-slate-600">{item.meaning}</Text> : null}
-              {item.origin ? <Text className="mt-0.5 text-xs text-slate-400">{item.origin}</Text> : null}
+              {item.meaning ? <Text className="mt-1 text-sm text-slate-600 dark:text-slate-300">{item.meaning}</Text> : null}
+              {item.origin ? <Text className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">{item.origin}</Text> : null}
             </View>
           )}
         />
