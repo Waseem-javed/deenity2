@@ -15,7 +15,7 @@ type TabIconProps = {
 function TabIcon({ name, color, size, focused, isDark }: TabIconProps) {
   return (
     <View
-      className="items-center justify-center rounded-full py-1"
+      className="items-center justify-center rounded-full"
     >
       <MaterialCommunityIcons name={name} color={color} size={size} />
     </View>
@@ -34,7 +34,7 @@ export default function TabsLayout() {
         tabBarActiveTintColor: isDark ? "#60a5fa" : "#1d4ed8",
         tabBarInactiveTintColor: isDark ? "#64748b" : "#94a3b8",
         tabBarShowLabel: true,
-        tabBarLabelStyle: { fontSize: 11, fontWeight: "600", marginTop: -2 },
+        tabBarLabelStyle: { fontSize: 11, fontWeight: "600", marginTop: 0 },
         tabBarItemStyle: { paddingTop: 6 },
         tabBarStyle: {
           position: "absolute",
@@ -44,14 +44,14 @@ export default function TabsLayout() {
           marginLeft: insets.left + 20,
           marginRight: insets.right + 20,
           height: 64,
-          borderRadius: 28,
+          borderRadius: 50,
           borderTopWidth: 0,
           backgroundColor: isDark ? "#0f172a" : "#ffffff",
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 8 },
           shadowOpacity: isDark ? 0.4 : 0.1,
           shadowRadius: 20,
-          elevation: 8,
+          elevation: 3,
         },
       }}
     >
