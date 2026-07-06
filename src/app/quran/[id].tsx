@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
@@ -38,6 +38,13 @@ export default function SurahScreen() {
   const audioUrl = reciters.find((r) => r.reciter_id === reciterId)?.surah_audio ?? null;
   const player = useAudioPlayer(audioUrl);
   const status = useAudioPlayerStatus(player);
+  const shouldAutoPlay = useRef(false);
+
+  useEffect(() => {
+    if (audioUrl && shouldAutoPlay.current) {
+      player.play();
+    }
+  }, [audioUrl, player]);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -76,7 +83,7 @@ export default function SurahScreen() {
 
   function selectReciter(id: number) {
     if (id === reciterId) return;
-    player.pause();
+    shouldAutoPlay.current = true;
     setReciterId(id);
   }
 

@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AsyncState } from "@/components/ui/AsyncState";
 import { ScreenContainer } from "@/components/ui/ScreenContainer";
 import { useCurrentLocation } from "@/hooks/useCurrentLocation";
+import { useTabBarClearance } from "@/hooks/useTabBarClearance";
 import { computePrayerTimes, formatPrayerTime, type DailyPrayerTimes } from "@/lib/adhanTimes";
 import { requestNotificationPermissions, scheduleAdhanNotifications } from "@/lib/notifications";
 import { getMadhab, getSilentAdhan } from "@/lib/preferences";
@@ -20,6 +21,7 @@ const PRAYER_ORDER: { key: keyof DailyPrayerTimes; label: string; icon: keyof ty
 ];
 
 export default function PrayerScreen() {
+  const clearance = useTabBarClearance();
   const { coords, loading: locating, error: locationError, retry: retryLocation } = useCurrentLocation();
   const [times, setTimes] = useState<DailyPrayerTimes | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -54,7 +56,7 @@ export default function PrayerScreen() {
       </View>
 
       <AsyncState loading={locating} error={locationError ?? error} onRetry={locationError ? retryLocation : load}>
-        <View className="gap-2 px-6 pb-6">
+        <View className="gap-2 px-6" style={{ paddingBottom: clearance }}>
           {PRAYER_ORDER.map(({ key, label, icon }) => (
             <View key={key} className="flex-row items-center justify-between rounded-2xl bg-white dark:bg-slate-900 p-4">
               <View className="flex-row items-center gap-3">

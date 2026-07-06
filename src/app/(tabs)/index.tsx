@@ -1,5 +1,6 @@
 import { FeatureCard } from "@/components/ui/FeatureCard";
 import { ScreenContainer } from "@/components/ui/ScreenContainer";
+import { useTabBarClearance } from "@/hooks/useTabBarClearance";
 import { ScrollView, Text, View } from "react-native";
 
 const FEATURES = [
@@ -14,9 +15,16 @@ const FEATURES = [
 ] as const;
 
 export default function HomeScreen() {
+  const clearance = useTabBarClearance();
+
   return (
     <ScreenContainer className="px-0 py-0">
-      <ScrollView className="flex-1" contentContainerClassName="px-6 py-6" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className="flex-1"
+        contentContainerClassName="px-6 pt-6"
+        contentContainerStyle={{ paddingBottom: clearance }}
+        showsVerticalScrollIndicator={false}
+      >
         <Text className="text-sm font-medium text-brand-600 dark:text-brand-400">Assalamu Alaikum</Text>
         <Text className="mt-1 text-3xl font-semibold text-slate-900 dark:text-white">Welcome to Ummah</Text>
         <Text className="mt-2 text-base text-slate-600 dark:text-slate-300">Everything for your daily worship, in one place.</Text>

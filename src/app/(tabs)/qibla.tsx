@@ -8,10 +8,12 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming, type SharedValu
 import { AsyncState } from "@/components/ui/AsyncState";
 import { ScreenContainer } from "@/components/ui/ScreenContainer";
 import { useCurrentLocation } from "@/hooks/useCurrentLocation";
+import { useTabBarClearance } from "@/hooks/useTabBarClearance";
 import { computeQiblaDirection } from "@/lib/adhanTimes";
 
 const ALIGNMENT_TOLERANCE_DEG = 5;
 const DIAL_RADIUS = 78;
+const LABEL_SIZE = 24;
 
 const CARDINALS = [
   { label: "N", angle: 0 },
@@ -38,18 +40,30 @@ function CardinalLabel({ label, angle, dialRotation }: { label: string; angle: n
   const style = useAnimatedStyle(() => {
     const placementAngle = angle + dialRotation.value;
     return {
-      transform: [{ rotate: `${placementAngle}deg` }, { translateY: -DIAL_RADIUS }, { rotate: `${-placementAngle}deg` }],
+      transform: [
+        { translateX: -LABEL_SIZE / 2 },
+        { translateY: -LABEL_SIZE / 2 },
+        { rotate: `${placementAngle}deg` },
+        { translateY: -DIAL_RADIUS },
+        { rotate: `${-placementAngle}deg` },
+      ],
     };
   });
 
   return (
-    <Animated.View style={[{ position: "absolute", top: "50%", left: "50%" }, style]}>
+    <Animated.View
+      style={[
+        { position: "absolute", top: "50%", left: "50%", width: LABEL_SIZE, height: LABEL_SIZE, alignItems: "center", justifyContent: "center" },
+        style,
+      ]}
+    >
       <Text className="text-sm font-semibold text-slate-400 dark:text-slate-500">{label}</Text>
     </Animated.View>
   );
 }
 
 export default function QiblaScreen() {
+  const clearance = useTabBarClearance();
   const { coords, loading: locating, error: locationError, retry: retryLocation } = useCurrentLocation();
   const [heading, setHeading] = useState<number | null>(null);
 
@@ -97,7 +111,7 @@ export default function QiblaScreen() {
   const animatedStyle = useAnimatedStyle(() => ({ transform: [{ rotate: `${rotation.value}deg` }] }));
 
   return (
-    <ScreenContainer className="items-center justify-center" edges={["top", "left", "right", "bottom"]}>
+    <ScreenContainer className="items-center justify-center" edges={["top", "left", "right"]} style={{ paddingBottom: clearance }}>
       <Text className="text-3xl font-semibold text-slate-900 dark:text-white">Qibla Direction</Text>
       <Text className="mt-1 text-center text-base text-slate-600 dark:text-slate-300">
         Hold your phone flat and turn until the arrow points up

@@ -4,6 +4,7 @@ import { Link } from "expo-router";
 
 import { AsyncState } from "@/components/ui/AsyncState";
 import { ScreenContainer } from "@/components/ui/ScreenContainer";
+import { useTabBarClearance } from "@/hooks/useTabBarClearance";
 import { QuranService } from "@/services/ummah/quran";
 
 type Surah = {
@@ -16,6 +17,7 @@ type Surah = {
 };
 
 export default function QuranScreen() {
+  const clearance = useTabBarClearance();
   const [surahs, setSurahs] = useState<Surah[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -52,7 +54,8 @@ export default function QuranScreen() {
         <FlatList
           data={surahs}
           keyExtractor={(item) => String(item.number)}
-          contentContainerClassName="px-6 pb-6 gap-2"
+          contentContainerClassName="px-6 gap-2"
+          contentContainerStyle={{ paddingBottom: clearance }}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => load({ silent: true })} tintColor="#1d4ed8" />}
           renderItem={({ item }) => (
             <Link href={`/quran/${item.number}`} asChild>

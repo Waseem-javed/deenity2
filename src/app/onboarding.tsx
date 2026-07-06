@@ -1,8 +1,10 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { useRef, useState } from "react";
 import { Dimensions, FlatList, Text, View, type ListRenderItemInfo, type NativeScrollEvent, type NativeSyntheticEvent } from "react-native";
 import { Button } from "react-native-paper";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { setHasOnboarded } from "@/lib/onboarding";
@@ -62,10 +64,26 @@ export default function OnboardingScreen() {
 
   function renderSlide({ item }: ListRenderItemInfo<Slide>) {
     return (
-      <View style={{ width }} className="flex-1 px-8">
-        <View className="h-24 w-24 mx-auto items-center justify-center rounded-full bg-brand-50 dark:bg-slate-800">
-          <MaterialCommunityIcons name={item.icon} size={44} color="#1d4ed8" />
-        </View>
+      <View style={{ width }} className="flex-1 items-center justify-center px-8">
+        <LinearGradient
+          colors={["#3b82f6", "#1d4ed8"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={{
+            height: 112,
+            width: 112,
+            borderRadius: 56,
+            alignItems: "center",
+            justifyContent: "center",
+            shadowColor: "#1d4ed8",
+            shadowOffset: { width: 0, height: 8 },
+            shadowOpacity: 0.3,
+            shadowRadius: 16,
+            elevation: 6,
+          }}
+        >
+          <MaterialCommunityIcons name={item.icon} size={48} color="#ffffff" />
+        </LinearGradient>
         <Text className="mt-8 text-center text-2xl font-semibold text-slate-900 dark:text-white">{item.title}</Text>
         <Text className="mt-3 text-center text-base leading-6 text-slate-600 dark:text-slate-300">{item.description}</Text>
       </View>
@@ -94,7 +112,11 @@ export default function OnboardingScreen() {
 
       <View className="flex-row items-center justify-center gap-2 pb-6">
         {SLIDES.map((slide, i) => (
-          <View key={slide.key} className={i === index ? "h-2 w-6 rounded-full bg-brand-600" : "h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-700"} />
+          <Animated.View
+            key={slide.key}
+            layout={LinearTransition.duration(200)}
+            className={i === index ? "h-2 w-6 rounded-full bg-brand-600" : "h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-700"}
+          />
         ))}
       </View>
 

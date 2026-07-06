@@ -5,6 +5,7 @@ import { ScrollView, Text, View } from "react-native";
 import { Button, SegmentedButtons, Switch } from "react-native-paper";
 
 import { ScreenContainer } from "@/components/ui/ScreenContainer";
+import { useTabBarClearance } from "@/hooks/useTabBarClearance";
 import { setHasOnboarded } from "@/lib/onboarding";
 import {
   getMadhab,
@@ -16,6 +17,7 @@ import {
 } from "@/lib/preferences";
 
 export default function MoreScreen() {
+  const clearance = useTabBarClearance();
   const { colorScheme, setColorScheme } = useColorScheme();
   const isDark = colorScheme === "dark";
 
@@ -50,7 +52,7 @@ export default function MoreScreen() {
 
   return (
     <ScreenContainer className="px-0 py-0">
-      <ScrollView contentContainerClassName="px-6 py-6 gap-6" showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerClassName="px-6 pt-6 gap-6" contentContainerStyle={{ paddingBottom: clearance }} showsVerticalScrollIndicator={false}>
         <View>
           <Text className="text-3xl font-semibold text-slate-900 dark:text-white">More</Text>
           <Text className="mt-1 text-base text-slate-600 dark:text-slate-300">Preferences & about</Text>
