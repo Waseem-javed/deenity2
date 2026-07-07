@@ -2,6 +2,7 @@ import { Link } from "expo-router";
 import { FlatList, Pressable, Text, View } from "react-native";
 
 import { ScreenContainer } from "@/components/ui/ScreenContainer";
+import { QURAN_PARA_NAMES } from "@/constants/quranParaNames";
 import { QURAN_TAJWEED_PARA_COUNT } from "@/constants/quranTajweedPages";
 import { useTabBarClearance } from "@/hooks/useTabBarClearance";
 
@@ -22,19 +23,23 @@ export default function TajweedScreen() {
         keyExtractor={(item) => String(item)}
         contentContainerClassName="px-6 gap-2"
         contentContainerStyle={{ paddingBottom: clearance }}
-        renderItem={({ item }) => (
-          <Link href={`/tajweed/${item}`} asChild>
-            <Pressable className="flex-row items-center gap-4 rounded-2xl bg-white dark:bg-slate-900 p-4 active:opacity-70">
-              <View className="h-10 w-10 items-center justify-center rounded-full bg-brand-50 dark:bg-slate-800">
-                <Text className="font-semibold text-brand-600 dark:text-brand-400">{item}</Text>
-              </View>
-              <View className="flex-1">
-                <Text className="text-base font-semibold text-slate-900 dark:text-white">Para {item}</Text>
-                <Text className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">Available offline</Text>
-              </View>
-            </Pressable>
-          </Link>
-        )}
+        renderItem={({ item }) => {
+          const name = QURAN_PARA_NAMES[item];
+          return (
+            <Link href={`/tajweed/${item}`} asChild>
+              <Pressable className="flex-row items-center gap-4 rounded-2xl bg-white dark:bg-slate-900 p-4 active:opacity-70">
+                <View className="h-10 w-10 items-center justify-center rounded-full bg-brand-50 dark:bg-slate-800">
+                  <Text className="font-semibold text-brand-600 dark:text-brand-400">{item}</Text>
+                </View>
+                <View className="flex-1">
+                  <Text className="text-base font-semibold text-slate-900 dark:text-white">{name?.english ?? `Para ${item}`}</Text>
+                  <Text className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">Para {item}</Text>
+                </View>
+                <Text className="text-lg text-slate-700 dark:text-slate-300">{name?.arabic}</Text>
+              </Pressable>
+            </Link>
+          );
+        }}
       />
     </ScreenContainer>
   );

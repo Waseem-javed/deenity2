@@ -5,12 +5,14 @@ import { FlatList, Pressable, Text, useWindowDimensions, View, type NativeScroll
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ZoomableImage } from "@/components/quran/ZoomableImage";
+import { QURAN_PARA_NAMES } from "@/constants/quranParaNames";
 import { QURAN_TAJWEED_PAGES } from "@/constants/quranTajweedPages";
 
 export default function TajweedParaScreen() {
   const { para } = useLocalSearchParams<{ para: string }>();
   const paraNumber = Number(para);
   const pages = QURAN_TAJWEED_PAGES[paraNumber] ?? [];
+  const name = QURAN_PARA_NAMES[paraNumber];
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
@@ -49,7 +51,10 @@ export default function TajweedParaScreen() {
         <Pressable onPress={() => router.back()} className="h-10 w-10 items-center justify-center rounded-full bg-white/10 active:opacity-70">
           <MaterialCommunityIcons name="chevron-left" size={26} color="#fff" />
         </Pressable>
-        <Text className="text-base font-semibold text-white">Para {paraNumber}</Text>
+        <View className="items-center">
+          {name ? <Text className="text-base text-white">{name.english}</Text> : null}
+          <Text className="text-xs font-semibold text-white/70">Para {paraNumber}</Text>
+        </View>
         <View className="h-10 w-10" />
       </View>
 
