@@ -14,7 +14,7 @@ export function ScreenContainer({ children, className, edges = ["top", "left", "
   return (
     <SafeAreaView
       edges={edges}
-      className={className ? ["flex-1 bg-slate-50 dark:bg-slate-950 px-4 py-4", className].join(" ") : "flex-1 bg-slate-50 dark:bg-slate-950 px-6 py-6"}
+      className={className ? ["flex-1 bg-slate-50 dark:bg-slate-950 px-4", className].join(" ") : "flex-1 bg-slate-50 dark:bg-slate-950 px-6 py-6"}
       style={props.style}
       {...props}
     >

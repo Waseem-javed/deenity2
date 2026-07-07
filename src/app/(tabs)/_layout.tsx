@@ -43,10 +43,9 @@ export default function TabsLayout() {
           bottom: insets.bottom,
           marginLeft: insets.left + 20,
           marginRight: insets.right + 20,
-          height: 64,
+          height: 64, 
           borderRadius: 50,
           borderTopWidth: 0,
-          backgroundColor: isDark ? "#0f172a" : "#ffffff",
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 8 },
           shadowOpacity: isDark ? 0.4 : 0.1,
@@ -65,7 +64,7 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="quran"
+        name="tajweed"
         options={{
           title: "Quran",
           tabBarIcon: ({ color, size, focused }) => (
@@ -73,6 +72,7 @@ export default function TabsLayout() {
           ),
         }}
       />
+      <Tabs.Screen name="quran" options={{ href: null }} />
       <Tabs.Screen
         name="prayer"
         options={{

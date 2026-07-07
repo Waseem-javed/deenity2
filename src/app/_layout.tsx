@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { useColorScheme } from "nativewind";
 import { useEffect } from "react";
 import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { AdhanPlayer } from "@/components/AdhanPlayer";
@@ -23,28 +24,31 @@ export default function RootLayout() {
   }, [setColorScheme]);
 
   return (
-    <SafeAreaProvider>
-      <PaperProvider theme={isDark ? darkTheme : lightTheme}>
-        <StatusBar style={isDark ? "light" : "dark"} />
-        <AdhanPlayer />
-        <Stack
-          screenOptions={{
-            headerShadowVisible: false,
-            headerStyle: { backgroundColor: isDark ? "#020617" : "#f8fafc" },
-            headerTintColor: isDark ? "#60a5fa" : "#1d4ed8",
-            headerTitleStyle: { fontWeight: "600", color: isDark ? "#ffffff" : "#0f172a" },
-          }}
-        >
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ title:'', headerShown: false }} />
-          <Stack.Screen name="duas/index" options={{ title: "Duas" }} />
-          <Stack.Screen name="asma/index" options={{ title: "99 Names" }} />
-          <Stack.Screen name="names/index" options={{ title: "Islamic Names" }} />
-          <Stack.Screen name="zakat/index" options={{ title: "Zakat Calculator" }} />
-          <Stack.Screen name="hadith/index" options={{ title: "Hadith" }} />
-        </Stack>
-      </PaperProvider>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <PaperProvider theme={isDark ? darkTheme : lightTheme}>
+          <StatusBar style={isDark ? "light" : "dark"} />
+          <AdhanPlayer />
+          <Stack
+            screenOptions={{
+              headerShadowVisible: false,
+              headerStyle: { backgroundColor: isDark ? "#020617" : "#f8fafc" },
+              headerTintColor: isDark ? "#60a5fa" : "#1d4ed8",
+              headerTitleStyle: { fontWeight: "600", color: isDark ? "#ffffff" : "#0f172a" },
+            }}
+          >
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ title:'', headerShown: false }} />
+            <Stack.Screen name="duas/index" options={{ title: "Duas" }} />
+            <Stack.Screen name="asma/index" options={{ title: "99 Names" }} />
+            <Stack.Screen name="names/index" options={{ title: "Islamic Names" }} />
+            <Stack.Screen name="zakat/index" options={{ title: "Zakat Calculator" }} />
+            <Stack.Screen name="hadith/index" options={{ title: "Hadith" }} />
+            <Stack.Screen name="tajweed/index" options={{ title: "Tajweed Mushaf" }} />
+          </Stack>
+        </PaperProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
