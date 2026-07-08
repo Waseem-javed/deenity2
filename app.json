@@ -1,15 +1,19 @@
 {
   "expo": {
-    "name": "ummah",
-    "slug": "ummah",
+    "name": "Deenity",
+    "slug": "deenity",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "ummah",
+    "scheme": "deenity",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.meesaw.deenity",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +28,7 @@
         "android.permission.RECORD_AUDIO",
         "android.permission.MODIFY_AUDIO_SETTINGS"
       ],
-      "package": "com.meesaw.ummah"
+      "package": "com.meesaw.deenity"
     },
     "web": {
       "output": "static",
@@ -47,7 +51,7 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "Ummah uses your location to show accurate prayer times and the Qibla direction."
+          "locationWhenInUsePermission": "Deenity uses your location to show accurate prayer times and the Qibla direction."
         }
       ],
       "expo-audio",
@@ -60,7 +64,8 @@
             "./assets/audio/adhan.wav"
           ]
         }
-      ]
+      ],
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true
@@ -71,7 +76,7 @@
       },
       "router": {},
       "eas": {
-        "projectId": "68c42f71-bde9-419a-b0eb-260a97da012a"
+        "projectId": "d608bfd0-038d-4477-b97b-0d8b2cc503ea"
       }
     }
   }

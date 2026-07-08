@@ -95,7 +95,7 @@ export default function MoreScreen() {
         </View>
 
         <View className="rounded-2xl bg-white dark:bg-slate-900 p-4">
-          <Text className="text-base font-semibold text-slate-900 dark:text-white">Ummah</Text>
+          <Text className="text-base font-semibold text-slate-900 dark:text-white">Deenity</Text>
           <Text className="mt-1 text-sm text-slate-500 dark:text-slate-400">Version 1.0.0</Text>
           <Button mode="outlined" onPress={replayOnboarding} style={{ marginTop: 12 }} icon="restart">
             Replay welcome tour

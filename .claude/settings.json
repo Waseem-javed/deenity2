@@ -4,7 +4,9 @@
       "Bash(adb logcat *)",
       "Bash(adb reverse *)",
       "Bash(curl -s -m 3 http://localhost:8081/status)",
-      "Bash(adb exec-out *)"
+      "Bash(adb exec-out *)",
+      "Bash(python3 -c \"import json; json.load\\(open\\('app.json'\\)\\); json.load\\(open\\('package.json'\\)\\); print\\('valid json'\\)\")",
+      "Bash(python3 -c \"import json; json.load\\(open\\('app.json'\\)\\); json.load\\(open\\('eas.json'\\)\\); print\\('valid json'\\)\")"
     ]
   },
   "enabledPlugins": {

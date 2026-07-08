@@ -23,7 +23,7 @@ const SLIDES: Slide[] = [
     key: "welcome",
     icon: "mosque",
     title: "Assalamu Alaikum",
-    description: "Ummah brings the Quran, prayer times, and daily worship tools together in one calm, focused place.",
+    description: "Deenity brings the Quran, prayer times, and daily worship tools together in one calm, focused place.",
   },
   {
     key: "quran",

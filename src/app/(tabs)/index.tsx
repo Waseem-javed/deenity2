@@ -79,7 +79,7 @@ export default function HomeScreen() {
           Assalamu Alaikum
         </Text>
         <Text className="mt-1 text-3xl font-semibold text-slate-900 dark:text-white">
-          Welcome to Ummah
+          Welcome to Deenity
         </Text>
         <Text className="mt-2 text-base text-slate-600 dark:text-slate-300">
           Everything for your daily worship, in one place.
