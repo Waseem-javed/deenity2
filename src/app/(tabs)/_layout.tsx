@@ -47,10 +47,11 @@ export default function TabsLayout() {
           borderRadius: 50,
           borderTopWidth: 0,
           shadowColor: "#000",
-          shadowOffset: { width: 0, height: 8 },
+            shadowOffset: { width: 0, height: 8 },
           shadowOpacity: isDark ? 0.4 : 0.1,
           shadowRadius: 20,
           elevation: 3,
+          backgroundColor: isDark ? "#0f172a" : "#ffffff",
         },
       }}
     >

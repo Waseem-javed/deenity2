@@ -45,7 +45,6 @@ export default function RootLayout() {
             <Stack.Screen name="names/index" options={{ title: "Islamic Names" }} />
             <Stack.Screen name="zakat/index" options={{ title: "Zakat Calculator" }} />
             <Stack.Screen name="hadith/index" options={{ title: "Hadith" }} />
-            <Stack.Screen name="tajweed/index" options={{ title: "Tajweed Mushaf" }} />
           </Stack>
         </PaperProvider>
       </SafeAreaProvider>
