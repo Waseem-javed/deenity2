@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { AdhanPlayer } from "@/components/AdhanPlayer";
+import { QiblaAlignmentAlert } from "@/components/QiblaAlignmentAlert";
 import { getThemePreference } from "@/lib/preferences";
 import "../../global.css";
 
@@ -29,6 +30,7 @@ export default function RootLayout() {
         <PaperProvider theme={isDark ? darkTheme : lightTheme}>
           <StatusBar style={isDark ? "light" : "dark"} />
           <AdhanPlayer />
+          <QiblaAlignmentAlert />
           <Stack
             screenOptions={{
               headerShadowVisible: false,

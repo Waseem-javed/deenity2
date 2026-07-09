@@ -1,17 +1,13 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import * as Haptics from "expo-haptics";
-import * as Location from "expo-location";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect } from "react";
 import { Text, View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming, type SharedValue } from "react-native-reanimated";
 
 import { AsyncState } from "@/components/ui/AsyncState";
 import { ScreenContainer } from "@/components/ui/ScreenContainer";
-import { useCurrentLocation } from "@/hooks/useCurrentLocation";
+import { useQiblaHeading } from "@/hooks/useQiblaHeading";
 import { useTabBarClearance } from "@/hooks/useTabBarClearance";
-import { computeQiblaDirection } from "@/lib/adhanTimes";
 
-const ALIGNMENT_TOLERANCE_DEG = 5;
 const DIAL_RADIUS = 78;
 const LABEL_SIZE = 24;
 
@@ -21,11 +17,6 @@ const CARDINALS = [
   { label: "S", angle: 180 },
   { label: "W", angle: 270 },
 ];
-
-function angularDifference(a: number, b: number) {
-  const diff = Math.abs(a - b) % 360;
-  return diff > 180 ? 360 - diff : diff;
-}
 
 /** Picks the equivalent target angle closest to `current`, so the needle animates the short way around. */
 function shortestRotation(current: number, targetMod360: number) {
@@ -64,34 +55,10 @@ function CardinalLabel({ label, angle, dialRotation }: { label: string; angle: n
 
 export default function QiblaScreen() {
   const clearance = useTabBarClearance();
-  const { coords, loading: locating, error: locationError, retry: retryLocation } = useCurrentLocation();
-  const [heading, setHeading] = useState<number | null>(null);
-
-  const qiblaBearing = useMemo(() => (coords ? computeQiblaDirection(coords.lat, coords.lng) : null), [coords]);
+  const { heading, qiblaBearing, aligned, loading: locating, error: locationError, retry: retryLocation } = useQiblaHeading();
 
   const rotation = useSharedValue(0);
   const dialRotation = useSharedValue(0);
-  const wasAligned = useRef(false);
-
-  useEffect(() => {
-    if (!coords) return;
-    let subscription: Location.LocationSubscription | null = null;
-    let cancelled = false;
-
-    Location.watchHeadingAsync((event) => {
-      setHeading(event.trueHeading >= 0 ? event.trueHeading : event.magHeading);
-    }).then((sub) => {
-      if (cancelled) sub.remove();
-      else subscription = sub;
-    });
-
-    return () => {
-      cancelled = true;
-      subscription?.remove();
-    };
-  }, [coords]);
-
-  const aligned = qiblaBearing !== null && heading !== null && angularDifference(qiblaBearing, heading) <= ALIGNMENT_TOLERANCE_DEG;
 
   useEffect(() => {
     if (heading === null) return;
@@ -101,12 +68,7 @@ export default function QiblaScreen() {
     if (qiblaBearing === null) return;
     const target = ((qiblaBearing - heading) % 360 + 360) % 360;
     rotation.value = withTiming(shortestRotation(rotation.value, target), { duration: 200 });
-
-    if (aligned && !wasAligned.current) {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    }
-    wasAligned.current = aligned;
-  }, [qiblaBearing, heading, aligned, rotation, dialRotation]);
+  }, [qiblaBearing, heading, rotation, dialRotation]);
 
   const animatedStyle = useAnimatedStyle(() => ({ transform: [{ rotate: `${rotation.value}deg` }] }));
 
